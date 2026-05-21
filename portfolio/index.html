@@ -111,41 +111,77 @@
     border-color: transparent; color: #0b1020;
   }
   .btn.primary:hover { opacity: 0.92; }
-  .avatar-card {
+  /* Code card */
+  .code-card {
     position: relative;
-    border-radius: 22px;
-    padding: 22px;
-    background: linear-gradient(160deg, rgba(124,156,255,0.18), rgba(167,139,250,0.08));
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-  }
-  .avatar {
-    aspect-ratio: 1/1;
     border-radius: 16px;
-    background:
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 50%),
-      linear-gradient(135deg, #1a2247 0%, #2a1e5a 100%);
-    display: grid; place-items: center;
-    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(160deg, #121a36 0%, #0c1228 100%);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow), 0 0 60px rgba(124,156,255,0.08);
     overflow: hidden;
   }
-  .initials {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 88px; font-weight: 600;
-    background: linear-gradient(120deg, #ffffff, #b8c2ff);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    letter-spacing: 4px;
+  .code-card::before {
+    content: "";
+    position: absolute; inset: -1px;
+    background: linear-gradient(120deg, transparent, rgba(124,156,255,0.35), transparent);
+    border-radius: 16px;
+    z-index: 0; opacity: .35; pointer-events: none;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    padding: 1px;
   }
+  .code-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .dot-row { display: flex; gap: 6px; margin-right: 8px; }
+  .dot-row span { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-row .r { background: #ff5f56; }
+  .dot-row .y { background: #ffbd2e; }
+  .dot-row .g { background: #27c93f; }
+  .code-body {
+    margin: 0;
+    padding: 18px 18px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #c8cee0;
+    position: relative; z-index: 1;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .code-body .ln { color: #4b5273; display: inline-block; width: 22px; user-select: none; }
+  .k { color: #c084fc; }      /* keyword */
+  .s { color: #38d9a9; }      /* string */
+  .p { color: #7c9cff; }      /* property */
+  .c { color: #5b6479; font-style: italic; }
+  .n { color: #f59e0b; }      /* number */
+  .f { color: #fbbf24; }      /* function */
+  .caret {
+    display: inline-block; width: 8px; height: 16px;
+    background: var(--accent); vertical-align: -3px;
+    animation: blink 1s steps(2) infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
   .quick {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    margin-top: 18px;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    margin-top: 16px;
   }
   .quick .pill {
-    text-align: center; padding: 10px 8px;
-    background: rgba(255,255,255,0.04);
+    text-align: center; padding: 12px 8px;
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
+    transition: transform .2s ease, border-color .2s ease;
   }
+  .quick .pill:hover { transform: translateY(-2px); border-color: rgba(124,156,255,0.3); }
   .quick .num {
     display: block; font-weight: 700; font-size: 22px;
     background: linear-gradient(120deg, var(--accent), var(--accent-2));
@@ -335,8 +371,23 @@
       </div>
     </div>
 
-    <div class="avatar-card reveal">
-      <div class="avatar"><div class="initials">NAT</div></div>
+    <div class="reveal">
+      <div class="code-card">
+        <div class="code-bar">
+          <div class="dot-row"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+          <span>~/portfolio &nbsp;—&nbsp; engineer.ts</span>
+        </div>
+        <pre class="code-body" aria-hidden="true"><code><span class="ln">1</span><span class="k">const</span> <span class="p">engineer</span> = {
+<span class="ln">2</span>  <span class="p">name</span>: <span class="s">'Nguyen Anh Tuan'</span>,
+<span class="ln">3</span>  <span class="p">role</span>: <span class="s">'Senior Software Engineer'</span>,
+<span class="ln">4</span>  <span class="p">years</span>: <span class="n">11</span>,
+<span class="ln">5</span>  <span class="p">stack</span>: [<span class="s">'.NET'</span>, <span class="s">'Angular'</span>, <span class="s">'Azure'</span>],
+<span class="ln">6</span>  <span class="p">domain</span>: <span class="s">'B2B · EDI · Supply Chain'</span>,
+<span class="ln">7</span>  <span class="p">based</span>: <span class="s">'Ho Chi Minh, VN'</span>,
+<span class="ln">8</span>  <span class="p">open</span>: <span class="k">true</span>,
+<span class="ln">9</span>  <span class="f">ship</span>: () =&gt; <span class="s">'production-ready'</span><span class="caret"></span>
+<span class="ln">10</span>};</code></pre>
+      </div>
       <div class="quick">
         <div class="pill"><span class="num">11+</span><span class="lbl">Years experience</span></div>
         <div class="pill"><span class="num">5</span><span class="lbl">Owned products</span></div>
